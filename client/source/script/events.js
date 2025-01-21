@@ -9,7 +9,7 @@ const items = Array(5)
 	.fill('')
 	.map((_, index) => ({
 		alt: "",
-		image: `https://cdn.jsdelivr.net/gh/elijahducote/DJEV@main/img/${index}.jpg`,
+		image: `https://cdn.jsdelivr.net/gh/elijahducote/djev@main/img/${index}.jpg`,
 		content:""
     //content: `<div><strong>Round Carousel</strong><span>Slide number ${index + 1}</span></div>`
 }));

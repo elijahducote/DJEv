@@ -28,7 +28,7 @@ function Menu(dropdown) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
     if (itR8R === 4) {
-      let a = htm([htm("","img",{class:"letter-icon",src:`./CDN/img/svg/${iconname[itR8R]}.svg`}),v],"a",{style:`margin: ${offset} 0 0;`,rel:"noreferrer",target:"_blank",href:"https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs"});
+      let a = htm([htm("","img",{class:"letter-icon",src:`./CDN/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{style:`margin: ${offset} 0 0;`,rel:"noreferrer",target:"_blank",href:"https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs"});
       van.add(contents,htm(undefined,"br"));
       return a;
     }

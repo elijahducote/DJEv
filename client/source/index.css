@@ -242,7 +242,7 @@ main svg#linktree {
   width:2.5em;
 }
 main svg.spinner {
-  animation: rt ease-in-out 800ms infinite paused;
+  animation: rt ease-in-out 0.88s infinite paused;
   z-index: 5;
   position:relative;
   top:1.5em;

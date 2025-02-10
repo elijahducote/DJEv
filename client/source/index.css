@@ -236,20 +236,20 @@ main svg#linktree {
   }
 }
 .fadeAway {
-  animation: fadeout ease-out 1.28s  0.88s 1 paused;
+  animation: fadeout ease-out 0.56s  0.56s 1 paused;
   position:relative;
   top:1.5em;
   width:2.5em;
 }
 main svg.spinner {
-  animation: rt ease-in-out 0.88s infinite paused;
+  animation: rt ease-in-out 0.56s infinite paused;
   z-index: 5;
   position:relative;
   top:1.5em;
   width:2.5em;
 }
 main.newmedia {
-  transition: opacity 1.28s ease-in;
+  transition: opacity 0.56s ease-in;
   opacity:0;
 }
 img.d-ev-music-image {
@@ -306,15 +306,11 @@ main.social-instagram, main.social-youtube, main.social-linktree {
   top:0.5em;
 }
 
-div#home, div#events, div#booking, div#playlists {
+div#home, div#booking, div#playlists {
   transition: opacity 1.28s ease-in;
   opacity:0;
   display:none;
   visibility: hidden;
-}
-
-div#events {
-  overflow: hidden;
 }
 
 @keyframes glow {
@@ -351,4 +347,7 @@ padding-bottom:1em;
   width:100%;
   margin-top:0.5em;
   margin-bottom:0.5em;
+}
+.home-heading, .home-description, h2 {
+  text-shadow: rgba(0, 0, 0, 0.9) 0 0.2em 0.15em, rgba(0, 0, 0, 0.7) 0 0.4em 0.65em, rgba(0, 0, 0, 0.7) 0 0.9em 1.15em;
 }

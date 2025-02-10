@@ -4,7 +4,7 @@ import {Loader} from "vanjs-feather";
 import {htm} from "./utility";
 import {Header} from "./header";
 import {Home} from "./home";
-import {Events} from "./events";
+//import {Events} from "./events";
 import {Booking} from "./booking";
 import {Playlists} from "./playlists";
 import BlurryImageLoad from "./blurry-load";
@@ -83,12 +83,12 @@ function WebApp(page,args) {
 }
 //Pages
 const landing = WebApp.bind(this,Home),
-shows = WebApp.bind(this,Events),
+//shows = WebApp.bind(this,Events),
 contact = WebApp.bind(this,Booking),
 listen = WebApp.bind(this,Playlists);
 van.add(app,siteHeader);
 van.add(document.getElementById("home"), landing);
-van.add(document.getElementById("events"), shows);
+//van.add(document.getElementById("events"), shows);
 van.add(document.getElementById("booking"), contact);
 van.add(document.getElementById("playlists"), listen);
 

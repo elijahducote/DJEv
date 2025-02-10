@@ -9,7 +9,7 @@ isCancelled = false;
 
 function Menu(dropdown) {
   const exit = htm("","img",{class:"exit-icon",src:"./CDN/img/svg/CRUX.svg"}),
-  iconname = ["HOME","DJEV","BOOK","NOTE","MERCH"],
+  iconname = ["HOME","BOOK","NOTE","MERCH"],
   contents = dropdown.firstElementChild;
   exit.addEventListener("touchend", throttle(function () {
     dropdown.addEventListener("transitionend",function(){
@@ -24,10 +24,10 @@ function Menu(dropdown) {
     dropdown.style.opacity = "0";
   },3000));
   van.add(contents,exit);
-  return list(contents,reactive(["ome", "J EVents", "ooking","laylists","erch"]),function (v) {
+  return list(contents,reactive(["ome", "ooking","laylists","erch"]),function (v) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
-    if (itR8R === 4) {
+    if (itR8R === 3) {
       let a = htm([htm("","img",{class:"letter-icon",src:`./CDN/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{style:`margin: ${offset} 0 0;`});
       
       a.addEventListener("touchend",() => window.open("https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs","EvWaveMerch","noreferrer,noopener"));
@@ -35,7 +35,7 @@ function Menu(dropdown) {
       van.add(contents,htm(undefined,"br"));
       return a;
     }
-    let path = ["home","events","booking","playlists"][itR8R],
+    let path = ["home","booking","playlists"][itR8R],
     section = htm([htm("","img",{class:"letter-icon",src:`./CDN/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{"data-link":path, style:`margin: ${offset} 0 0; user-select: none;`});
     section.addEventListener("click", function() {
       const clickEvent = new Event("click");

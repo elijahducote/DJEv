@@ -93,22 +93,23 @@ app.post("/resend", async (c) => {
     const body = await c.req.arrayBuffer();
     const contentType = await c.req.header("Content-Type");
     const bodyBuffer = Buffer.from(body, 'base64');
-
+ 
     // Parse multipart form data (unchanged)
     const { fields, files } = await parseFormData(bodyBuffer, contentType);
-    console.log(files);
+    console.log(fields);
     // Prepare Resend email payload (unchanged)
     const emailPayload = {
       from: 'Evwave Music <booking@djev.org>',
       to: fields.email?.[0] || 'ducote.help@gmail.com',
       subject: `New Submission: ${fields.event?.[0] || 'No Event'}`,
       html: buildEmailHtml(fields),
-      attachments: files.map(file => ({
+    };
+    if (files[files.length - 1].content.length) emailPayload.attachments = files.map(file => ({
         content: file.content.toString('base64'),
         filename: file.filename,
         contentType: file.contentType
-      }))
-    };
+    }));
+    
     
     let error = false;
     // Send to Resend API using Axios

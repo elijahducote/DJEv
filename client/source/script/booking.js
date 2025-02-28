@@ -6,13 +6,23 @@ import axios from "axios";
 let fillout;
 
 export function Booking() {
+  window.rqid = false;
   const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0"}),
   bookingForm = htm(undefined, "div");
+  
+  captcha.addEventListener("verified", function (e) {
+    window.rqid = e.token;
+    document.getElementById("submit-button").disabled = false;
+  });
+  captcha.addEventListener("error", function (e) {
+    window.rqid = false;
+    console.log(e.error);
+  });
 
   fillout = new Form(bookingForm, {
       id: "form",
       method:"POST",
-      action:"/go/resend",
+      action:"/resend",
       //className: "pure-form pure-form-stacked",
       schema: [
         {
@@ -157,6 +167,11 @@ export function Booking() {
          required: false
         },
         {
+          id: "token",
+          name: "token",
+          type: "hidden"
+        },
+        {
           id: "submit-button",
           type: "button",
           buttonType:"submit",
@@ -180,6 +195,13 @@ export function Booking() {
     window.addEventListener("load", function () {
       document.getElementById("form").setAttribute("enctype","multipart/form-data");
       document.getElementById("form").classList.add("pure-form","pure-form-stacked");
+      document.getElementById("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (window.rqid) {
+          fillout.getField("token").setValue(window.rqid);
+          e.currentTarget.submit();
+        }
+      });
       let offspring = document.getElementById("form").childNodes;
       van.add(offspring[offspring.length- 2],captcha);
     });

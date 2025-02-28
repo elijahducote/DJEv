@@ -6,24 +6,35 @@ import { sendHTMLResponse } from '../../../utility.js'; // Adjust path as needed
 export async function handler(event) {
   try {
     // Handle binary body
-    const contentType = event.headers['content-type'];
-    const bodyBuffer = Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'utf8');
+    const contentType = event.headers['content-type'],
+    bodyBuffer = Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'utf8'),
+    statum,
+    error = false;
 
     // Parse multipart form data
     const { fields, files } = await parseFormData(bodyBuffer, contentType);
-
+    
+    await hcaptcha.post("https://api.hcaptcha.com/siteverify", {secret:process.env.HCAPTCHA_SECRET,response:fields.token}).then((resp) => {
+      statum = resp.data.success;
+    }).catch((err) => {
+      error = err;
+    });
+    if (error) throw new Error(error);
     // Prepare email payload
     const emailPayload = {
       from: 'Evwave Music <booking@djev.org>',
       to: fields.email?.[0] || 'ducote.help@gmail.com',
+      headers: {
+        "X-Entity-Ref-ID": Math.floor(Date.now() / 1000).toString()
+      },
       subject: `New Submission: ${fields.event?.[0] || 'No Event'}`,
-      html: buildEmailHtml(fields),
-      attachments: files.map(file => ({
+      html: buildEmailHtml(fields)
+    };
+    if (files[files.length - 1].content.length) emailPayload.attachments = files.map(file => ({
         content: file.content.toString('base64'),
         filename: file.filename,
         contentType: file.contentType
-      }))
-    };
+    }));
 
     // Send to Resend API
     await axios.post('https://api.resend.com/emails', emailPayload, {

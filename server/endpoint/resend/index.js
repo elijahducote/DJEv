@@ -3,7 +3,7 @@ import Busboy from 'busboy';
 import axios from 'axios';
 import { sendHTMLResponse } from '../../../utility.js'; // Adjust path as needed
 
-export async function handler(event) {
+exports.handler = async (event) => {
   try {
     // Handle binary body
     const contentType = event.headers['content-type'],

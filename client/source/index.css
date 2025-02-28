@@ -1,11 +1,12 @@
 :root {
   font-size: 1px;
+  font-family: "Brisa Sans", Helvetica, Arial, sans-serif !important;
 }
 body, html {
   font-size: 20rem;
   color: #fff;
   scroll-behavior: smooth;
-  font-family: "Brisa Sans", Helvetica, Arial, sans-serif;
+  font-family: "Brisa Sans", Helvetica, Arial, sans-serif !important;
 }
 div.container {
   padding: 0;
@@ -52,6 +53,18 @@ font-family:120rem !important;
 }
 }*/
 
+div.top-nav {
+  display:none !important;
+}
+h2.nav-top-section{
+  display:inline;
+}
+img.letter-icon {
+  right: 0 !important;
+  margin-right: 0 !important;
+  padding: 0 !important;
+  margin-left:0.9375em;
+}
 /* Extra Small */
 @media screen and (max-height:869.9033203125px) and (min-width:404.953125px) {
 div.container {
@@ -59,6 +72,12 @@ font-size:20rem !important;
 }
 #captcha {
 transform:scale(1.25);
+}
+main.menu {
+  display:inline-block !important;
+}
+div.top-nav {
+  display:none !important;
 }
 }
 
@@ -70,6 +89,12 @@ font-size:20rem !important;
 #captcha {
 transform:scale(1.25);
 }
+main.menu {
+  display:inline-block !important;
+}
+div.top-nav {
+  display:none !important;
+}
 }
 
 /* Medium */
@@ -79,6 +104,12 @@ font-size:30rem !important;
 }
 #captcha {
 transform:scale(1.5);
+}
+main.menu {
+  display:none !important;
+}
+div.top-nav {
+  display:inline !important;
 }
 }
 
@@ -90,6 +121,12 @@ font-size:30rem !important;
 #captcha {
 transform:scale(1.5);
 }
+main.menu {
+  display:none !important;
+}
+div.top-nav {
+  display:inline !important;
+}
 }
 
 /* Extra Large */
@@ -100,6 +137,12 @@ font-size:40rem !important;
 #captcha {
 transform:scale(1.75);
 }
+main.menu {
+  display:none !important;
+}
+div.top-nav {
+  display:inline !important;
+}
 }
 
 /* Extra Extra Large */
@@ -109,6 +152,12 @@ font-size:60rem !important;
 }
 #captcha {
 transform:scale(2);
+}
+main.menu {
+  display:none !important;
+}
+div.top-nav {
+  display:inline !important;
 }
 }
 
@@ -143,14 +192,15 @@ div.header-img {
   position: fixed;
   z-index:5;
   opacity:0.0;
-  transition: opacity 1.28s ease-in;
+  transition: opacity 0.56s ease-in;
+
 }
 div.header-img img {
   padding:.25em;
-  right: 2.5em;
   position: relative;
   max-height:1.75em;
   padding-top:.75em;
+  margin-right: 2em;
 }
 
 main.menu {
@@ -164,11 +214,11 @@ main svg.icon {
   height:auto;
   stroke-width:.065em;
   z-index:6;
-  transition: opacity 1.28s ease-in-out;
+  transition: opacity 0.56s ease-in-out;
   filter: drop-shadow(0.125em 0.125em 0.5em rgba(0, 0, 0, 1));
 }
 main svg#drawer {
-  transition: transform 1.28s ease-in-out;
+  transition: transform 0.56s ease-in-out;
 }
 main svg#drawer:hover {
   transform: rotate(3.14rad);
@@ -183,7 +233,7 @@ main svg#instagram {
   top:4.375em;
   padding:0px;
   position:relative;
-  transition: transform 1.28s ease-in-out;
+  transition: transform 0.56s ease-in-out;
   z-index:6;
 }
 main svg#instagram:hover, main svg#youtube:hover, main svg#linktree:hover {
@@ -194,7 +244,7 @@ main svg#youtube {
   top:4.375em;
   padding:0px;
   position:relative;
-  transition: transform 1.28s ease-in-out;
+  transition: transform 0.56s ease-in-out;
 }
 main svg#linktree {
   fill:url("#gradi-lnk") !important;
@@ -204,7 +254,7 @@ main svg#linktree {
   left:2.5em;
   padding:0px;
   position:relative;
-  transition: transform 1.28s ease-in-out;
+  transition: transform 0.56s ease-in-out;
   /*padding-left:2em;*/
 }
 .instagram-link {
@@ -238,25 +288,32 @@ main svg#linktree {
 .fadeAway {
   animation: fadeout ease-out 0.56s  0.56s 1 paused;
   position:relative;
-  top:1.5em;
+  top:4.375em;
   width:2.5em;
 }
 main svg.spinner {
   animation: rt ease-in-out 0.56s infinite paused;
   z-index: 5;
   position:relative;
-  top:1.5em;
+  top:4.375em;
   width:2.5em;
 }
 main.newmedia {
   transition: opacity 0.56s ease-in;
   opacity:0;
+  z-index:-1;
+  width:0;
+  height:0;
+  margin-right:2em;
+  pointer-events: none;
+  user-select: none;
+  touch-action: none;
 }
 img.d-ev-music-image {
   min-height:100vh;
   width: 100vw;
   display: block;
-  opacity: 1;
+  opacity: 0.75;
   z-index: 0;
   inset: 0;
   position: absolute;
@@ -290,7 +347,7 @@ img.letter-icon {
 div#nav-ux {
   background:rgba(0,0,0,.4) !important;
   backdrop-filter: blur(0.375em);
-  transition: opacity 1.28s ease-in;
+  transition: opacity 0.56s ease-in;
   display:none;
   opacity:0;
   visibility:hidden;
@@ -304,10 +361,11 @@ main.social-instagram, main.social-youtube, main.social-linktree {
   position:fixed;
   z-index:5;
   top:0.5em;
+  right:3.125em;
 }
 
 div#home, div#booking, div#playlists {
-  transition: opacity 1.28s ease-in;
+  transition: opacity 0.56s ease-in;
   opacity:0;
   display:none;
   visibility: hidden;
@@ -327,12 +385,12 @@ div#home, div#booking, div#playlists {
 #captcha {
 width:100%;
 transform-origin:center;
-padding-top:1em;
-padding-bottom:1em;
+margin: 2em 0 2em 0;
+display: inline-block;
 }
 .booking-submit {
   opacity:1;
-  transition: opacity 1.28s ease-in-out;
+  transition: opacity 0.56s ease-in-out;
 }
 .booking-submit:disabled {
   opacity:.5;
@@ -348,6 +406,117 @@ padding-bottom:1em;
   margin-top:0.5em;
   margin-bottom:0.5em;
 }
-.home-heading, .home-description, h2 {
+.home-heading, .home-description, h2, p {
+  text-shadow: rgba(0, 0, 0, 0.9) 0 0.2em 0.15em, rgba(0, 0, 0, 0.7) 0 0.4em 0.65em, rgba(0, 0, 0, 0.7) 0 0.9em 1.15em;
+}
+.pure-button {
+  font-size:1.5em;
+}
+#attachment * {
+  background-color:transparent;
+  color:#FFF !important;
+}
+#attachment {
+  background-color:rgba(0,0,0,.5);
+  height: 13ch;
+  width:100%;
+  font-size: 1em;
+}
+label, p {
+  font-size: 1.25em !important;
+  font-weight: normal;
+}
+
+.ts-wrapper {
+  box-sizing: border-box;
+  font-size: 1em;
+  line-height: 2ch;
+  color: rgb(0, 0, 0);
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  font-weight: 400;
+  letter-spacing: normal;
+  padding: .5em;
+  resize: vertical;
+  background-color: rgb(255, 255, 255);
+  border-radius: .125em;
+  cursor: auto;
+  text-decoration: none solid rgb(0, 0, 0);
+  align-self: center;
+  box-shadow: rgba(70, 156, 215, 0.686) 0 0.0125em 0.0375em 0.0425em, rgba(0, 0, 0, 0.02) 0em 0.011615133333em 0.023230266667em 0em, rgba(255, 255, 255, 0.243) 0em 0.046460666667em 0.034845333333em 0em, rgba(127, 127, 127, 0.07) 0em 0.092921em 0.150996666667em 0em, rgba(255, 255, 255, 0.07) 0em 0.209072333333em 0.267148em 0em;
+  min-width: 75%;
+  outline: rgb(0, 0, 0) none 0em;
+  transition: all 0.3s ease 0s;
+  text-align: start;
+  white-space: pre-wrap;
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.ts-wrapper.multi .ts-control>div {
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 0.5em 0.5em;
+  border-radius: 2em;
+  text-align: center;
+  display: flex;
+  font-size: 2em;
+  background: #000;
+  border: 0 solid #d0d0d0;
+  margin: auto;
+  align-items: center;
+  color: #FFF;
+}
+
+#multiselect-ts-control {
+  height:100%;
+  font-size: 2em !important;
+}
+
+.ts-dropdown [data-selectable].option {
+  opacity: 1;
+  cursor: pointer;
+  background-color: #000;
+  color: #FFF;
+  font-size: 1.5em !important;
+  line-height: 1.25em !important;
+}
+
+.ts-dropdown-content {
+  max-height:none !important;
+}
+
+.has-items .ts-control>input {
+  height: 100%;
+  font-size: 2em;
+}
+.flatpickr-calendar.animate.open {
+  color: yellow;
+  background: #000;
+}
+.flatpickr-time input:hover, .flatpickr-time .flatpickr-am-pm:hover, .flatpickr-time input:focus, .flatpickr-time .flatpickr-am-pm:focus {
+  background-color: #000 !important;
+  color: yellow;
+  background: #000 !important;
+}
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  background-color: #000 !important;
+  background: #000 !important;
+}
+
+h-captcha#captcha iframe {
+  height: 18em;
+  position: relative;
+}
+.form-field:has(.flatpickr-input) .form-input.form-control {
+  background: #000;
+  color: #FFF;
+}
+input, textarea {
+  color:#FFF !important;
+}
+.form-field-validation {
+  color: red !important;
+  font-weight: bold !important;
   text-shadow: rgba(0, 0, 0, 0.9) 0 0.2em 0.15em, rgba(0, 0, 0, 0.7) 0 0.4em 0.65em, rgba(0, 0, 0, 0.7) 0 0.9em 1.15em;
 }

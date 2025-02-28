@@ -2,6 +2,16 @@ import {htm} from "./utility";
 import {goto} from "./vanjs-router";
 import { RoundCarousel, RoundCarouselItem } from "round-carousel-component";
 
+function getFontSizeInEm(element) {
+    const computedStyle = window.getComputedStyle(element);
+    const fontSizePx = parseFloat(computedStyle.fontSize);
+    const parentFontSizePx = parseFloat(window.getComputedStyle(element.parentElement).fontSize) || 16; // Default 16px if no parent
+
+    return fontSizePx; // Convert px to em
+}
+
+
+
 export function Home() {
   const cta = htm(htm("Book Us","span",{class:"button-text"}),
     "button",
@@ -19,13 +29,14 @@ export function Home() {
       //content: `<div><strong>Round Carousel</strong><span>Slide number ${index + 1}</span></div>`
   }));
   
-  new RoundCarousel(node, {
+  const slides = new RoundCarousel(node, {
     items,
-    itemWidth:480,
+    itemWidth:720,
     showControls: true,
     nextButtonContent: "",
     prevButtonContent: ""
   });
+  
   
   cta.addEventListener("click",function() {
     goto("booking");

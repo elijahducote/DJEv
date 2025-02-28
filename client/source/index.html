@@ -4,13 +4,14 @@
     <meta charset=utf-8 />
     <title>DJ EV MUSIC</title>
   	<meta name=viewport content="width=device-width,initial-scale=1.0" />
-  	<link rel=icon type=image/png href=./CDN/ico/favicon-48x48.png sizes=48x48 />
-  	<link rel=icon type=image/svg+xml href=./CDN/ico/favicon.svg />
-  	<link rel="shortcut icon" href="./CDN/ico/favicon.ico" />
-  	<link rel=apple-touch-icon sizes=180x180 href=/CDN/ico/apple-touch-icon.png />
+  	<link rel=icon type=image/png href=./cdn/ico/favicon-48x48.png sizes=48x48 />
+  	<link rel=icon type=image/svg+xml href=./cdn/ico/favicon.svg />
+  	<link rel="shortcut icon" href="./cdn/ico/favicon.ico" />
+  	<link rel=apple-touch-icon sizes=180x180 href=./cdn/ico/apple-touch-icon.png />
   	<meta name="apple-mobile-web-app-title" content="DJ EV" />
-  	<link rel=manifest href=./CDN/ico/site.webmanifest />
-    <link rel=stylesheet type=text/css href=./CDN/css/ravel.css />
+  	<link rel=manifest href=./cdn/ico/site.webmanifest />
+    <link rel=stylesheet type=text/css href=./cdn/css/ravel.css />
+    <script src="https://cdn.jsdelivr.net/npm/filepond/dist/filepond.min.js"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/@hcaptcha/vanilla-hcaptcha"></script>-->
   </head>
 <body>
@@ -27,7 +28,7 @@
   <div class=container style=margin-bottom:0;margin-top:0;background:transparent>
     <div id="home" class=wrapper style="margin: 7.5em 0 0"></div>
     <!--<div id="events" class=wrapper style="margin: 31.25vh 0 0"></div>-->
-    <div id="booking" class=wrapper style="margin: 14.875em 0 0"></div>
+    <div id="booking" class="wrapper" style="margin: 7.5em 0 0"><div id=booking-form></div></div>
     <div id="playlists" class=wrapper style="margin: 7.5em 0 0"></div>
   </div>
   <svg style=visibility:hidden;opacity:0;width:0px;height:0px;border:none;margin:0px;padding:0px>
@@ -48,6 +49,6 @@
        </filter>
     </defs>
   </svg>
-  <script src=./CDN/js/index.js></script>
+  <script src=./cdn/js/index.js></script>
 </body>
 </html>

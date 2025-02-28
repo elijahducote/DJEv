@@ -1,105 +1,187 @@
 import {htm} from "./utility";
 import "@hcaptcha/vanilla-hcaptcha";
+import { Form } from "@forms.js/core";
 import axios from "axios";
 
+let fillout;
+
 export function Booking() {
-  const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0"}), 
-  form = htm([
-    htm("Your Email",
-    "label",
-    {
-      for: "mailbox",
-      class: "home-heading"
-    }
-    ),
-    
-    htm(undefined,
-    "input",
-    {
-      type: "email",
-      name: "mailbox",
-      required: true,
-      minlength: "10",
-      placeholder: "Username@Website.Ext",
-      class: "booking-email-input",
-    }
-    ),
-    
-    htm(undefined,
-    "br"
-    ),
-    
-    htm("Your Message",
-    "label",
-    {
-      for: "message",
-      class: "home-heading"
-    }
-    ),
-    
-    htm(undefined,
-    "textarea",
-    {
-      name: "message",
-      form: "delivery",
-      required: true,
-      minlength: "14",
-      maxlength: "2000",
-      placeholder: "Say something!",
-      class: "booking-message-text",
-    }
-    ),
-    
-    htm(undefined,"input",{type:"checkbox",id:"enroll",checked:true}),
-    
-    htm("Enroll for updates?","label",{class:"mailerlite"}),
-    
-    captcha,
-    
-    htm(htm("SUBMIT","span"),
-    "button",
-    {
-      type:"submit",
-      class:"booking-submit",
-      disabled:true
-    }
-    )
-    
-    ],
-    "form",
-    {
-      action: "/go/deliver",
-      method: "post",
-      class: "booking-form",
-      id: "delivery"
-    }
-    
-    );
-    
-    captcha.addEventListener("verified", (e) => {
-      window.rqid = e.token;
-      document.getElementsByClassName("booking-submit")[0].disabled = false;
-    });
-    captcha.addEventListener("error", (e) => {
-      window.rqid = false;
-      document.getElementsByClassName("booking-submit")[0].disabled = true;
-    });
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (window.rqid) {
-        const elm = document.getElementById("enroll");
-        if (elm.checked) {
-          let data = new FormData(e.target),
-          vals = Object.fromEntries(data);
-          await axios.post("/go/subscribe",{mailbox:vals.mailbox});
+  const captcha = htm(undefined,"h-captcha",{"auto-render":"true","id":"captcha","site-key":"e2480948-c1cc-4f46-ac56-81ea236a50c8","size":"compact","tabindex":"0"}),
+  bookingForm = htm(undefined, "div");
+
+  fillout = new Form(bookingForm, {
+      id: "form",
+      method:"POST",
+      action:"/resend",
+      //className: "pure-form pure-form-stacked",
+      schema: [
+        {
+          id: "date",
+          type:"datetime",
+          name:"date",
+          label: "Date of Event",
+          enhance: true,
+          placeholder: "MM/DD/YY 00:00 AM/PM",
+          required: true
+        },
+        {
+         id: "email",
+         type:"email",
+         name:"email",
+         label: "Email",
+         placeholder: "Username@Website.Ext",
+         required: true
+        },
+        {
+          id: "attachment",
+          type:"file",
+          name:"attachment",
+          options:{
+            fileSizeBase: 1024,
+            allowBrowse: true,
+            storeAsFile: true,
+            checkValidity: true,
+            maxFiles: 1,
+            dropValidation: true
+          },
+          label: "Attachment?",
+          required: false,
+          enhanced: true
+        },
+        {
+          id: "event",
+          type:"text",
+          name:"event",
+          label: "Type of Event",
+          placeholder: "Ex: Jennifer’s 50th Bday Party",
+          required: true
+        },
+        {
+          id: "locale",
+          type:"text",
+          name: "locale",
+          label: "Address of Event",
+          placeholder: "Ex: 1787 Botanical Boulevard, Houston, Texas",
+          required: true
+        },
+        {
+          id: "selection",
+          type:"select",
+          name: "selection",
+          label: "Type of Music",
+          enhance: true,
+          multiple: true,
+          required: true,
+          placeholder: "Choose as many from the selection.",
+          optionsList: [
+            {
+              value: "Top 40",
+              label: "Top 40",
+            },
+            {
+              value: "Pop",
+              label: "Pop",
+            },
+            {
+              value: "Rock",
+              label: "Rock",
+            },
+            {
+              value: "R&B",
+              label: "R&B",
+            },
+            {
+              value: "Hip-Hop/Rap",
+              label: "Hip-Hop/Rap",
+            },
+            {
+              value: "Country",
+              label: "Country",
+            },
+            {
+              value: "Disco",
+              label: "Disco",
+            },
+            {
+              value: "Oldies",
+              label: "Oldies",
+            },
+            {
+              value: "Motown",
+              label: "Motown",
+            },
+            {
+              value: "Classical",
+              label: "Classical",
+            },
+            {
+              value: "Alternative",
+              label: "Alternative",
+            },
+            {
+              value: "Jazz",
+              label: "Jazz",
+            },
+            {
+              value: "Techno/House",
+              label: "Techno/House",
+            },
+            {
+              value: "Dubstep",
+              label: "Dubstep",
+            },
+          ],
+        },
+        {
+          id: "requests",
+          type:"textarea",
+          name: "requests",
+          label: "Requests?",
+          placeholder: "List Artist and Song; or send link playlist (website, Spotify, YouTube)",
+          required: false
+        },
+        {
+          id:"dislikes",
+          type:"textarea",
+          name:"dislikes",
+          label:"Dislikes?",
+          placeholder:"Songs or artists that you do not want to be played.",
+          required: false
+        },
+        {
+         id: "comments",
+         type:"textarea",
+         name:"comments",
+         label: "Comments?",
+         placeholder: "Please list anything or any notes that you want DJ EV to know beforehand.",
+         required: false
+        },
+        {
+          id: "submit-button",
+          type: "button",
+          buttonType:"submit",
+          template: "Submit",
+          className: "pure-button-primary pure-button",
         }
-        const verified = document.createElement("input");
-        verified.type = "hidden";
-        verified.name = "response";
-        verified.value = window.rqid;
-        e.target.appendChild(verified);
-        e.target.submit();
-      }
+        /*{
+          id:"button-group",
+          type:"group",
+          schema:[
+            {
+              id: "submit-button",
+              type:"button",
+              label: "Submit",
+              className: "pure-button-primary pure-button"
+            },
+          ]
+        },*/
+        ]
     });
-    return form;
+    window.addEventListener("load", function () {
+      document.getElementById("form").setAttribute("enctype","multipart/form-data");
+      document.getElementById("form").classList.add("pure-form","pure-form-stacked");
+      let offspring = document.getElementById("form").childNodes;
+      van.add(offspring[offspring.length- 2],captcha);
+    });
+    return bookingForm;
 }

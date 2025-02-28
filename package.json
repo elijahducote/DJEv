@@ -1,20 +1,24 @@
 {
   "type": "module",
   "scripts": {
-    "build": "esbuild ./client/source/script/index.js --keep-names --drop:debugger --pure:console.log --tree-shaking=true --legal-comments=none --charset=utf8 --format=iife --bundle --platform=browser --minify --target=chrome120,firefox120,edge120,safari16,opera103 --outfile=./client/source/js/index.js && esbuild ./client/source/ravel.css --loader:.css=css --loader:.ttf=file --tree-shaking=true --legal-comments=none --charset=utf8 --bundle --platform=browser --minify --target=chrome120,firefox120,edge120,safari16,opera103 --outfile=./client/source/css/ravel.css"
+    "build": "esbuild ./client/source/script/index.js --keep-names --drop:debugger --pure:console.log --tree-shaking=true --legal-comments=none --charset=utf8 --format=iife --bundle --platform=browser --minify --target=chrome120,firefox120,edge120,safari16,opera103 --outfile=./client/source/js/index.js && esbuild ./client/source/ravel.css --loader:.css=css --loader:.ttf=file --tree-shaking=true --legal-comments=none --charset=utf8 --bundle --platform=browser --minify --target=chrome120,firefox120,edge120,safari16,opera103 --outfile=./client/source/css/ravel.css",
+    "server": "node -r dotenv/config --env-file=.env serve.js"
   },
   "dependencies": {
+    "@forms.js/core": "^1.1.12",
     "@hcaptcha/vanilla-hcaptcha": "^1.1.0-alpha2",
+    "@hono/node-server": "^1.13.8",
     "axios": "^1.7.2",
+    "busboy": "^1.6.0",
     "dotenv": "^16.4.5",
-    "esbuild": "^0.23.0",
+    "parse-multipart": "^1.0.4",
     "round-carousel-component": "^1.2.1",
     "vanjs-core": "^1.5.1",
     "vanjs-ext": "^0.6.0",
-    "vanjs-feather": "^0.0.5"
+    "vanjs-feather": "^0.0.5",
+    "esbuild": "0.25.0"
   },
   "devDependencies": {
-    "express": "^4.19.2",
-    "gradient2svg": "^0.0.4"
+    "hono": "^4.7.2"
   }
 }

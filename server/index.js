@@ -2,6 +2,7 @@ import express from "express";
 import axios from "axios";
 import "dotenv/config";
 import path from "path";
+import multipart from "parse-multipart";
 import { fileURLToPath } from "url";
 import bodyParser from "body-parser";
 import util from "util";
@@ -36,6 +37,7 @@ async function rebuild (command) {
     print(e,0);
   }
 }
+app.use(bodyParser.urlencoded({ extended: true })); // If using body-parser
 app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(express.static(source));
@@ -168,6 +170,77 @@ app.post("/subscribe", async (req, res) => {
     const htmlContent = `<!doctype html><html><head><title>${nametag[ndx]}.</title><link href=../../fonts.css rel=stylesheet></head><body><style>:root{font-size:1px}body,html{background:#000;font-size:35rem;font-family:Brisa Sans}.container{padding:0;min-width:auto;margin:0 -50% 0 -50%;width:100%;max-height:100vh;max-width:100vw;display:block;position:absolute;inset:0 50% 0 50%;box-sizing:content-box;background:#000}@media (min-height:626px) and (min-width:365px){.container{font-size:20rem}}@media (min-height:912px) and (min-width:540px){.container{font-size:40rem}.container{font-size:60rem}}@media (min-width:992px) and (min-height:654px){.container{font-size:100rem}}@media (min-width:1363px) and (min-height:559px){.container{font-size:120rem}}@media (min-width:1932px) and (min-height:1121px){.container{font-size:150rem}}.wrapper{line-height:1.5em;letter-spacing:.075em;right:100%;margin:50% 0 0 0;color:#fff;left:0;width:100%;padding:0;position:absolute;box-sizing:border-box;display:flex;text-align:center;justify-content:center;align-content:center;object-position:center;align-items:center}svg{width:5em}</style><div class=container><div class=wrapper style="margin:0 auto">${svg[ndx]}</div>${content}</div></body></html>`;
     
     res.status(respcode).set('Content-Type', 'text/html').send(htmlContent);
+});
+
+
+app.post("/resend", async (req,res) => {
+  try {
+    // Parse multipart form data
+    const bodyBuffer = Buffer.from(JSON.stringify(req.body), "base64"),
+    boundary = multipart.getBoundary(req.headers["content-type"]),
+    parts = multipart.Parse(bodyBuffer, boundary);
+    console.log(req.body);
+    const formData = {},
+    attachments = [];
+
+    parts.forEach(part => {
+      if (part.filename) attachments.push({
+          filename: part.filename,
+          content: part.data.toString("base64"),
+          contentType: part.type || "application/octet-stream"
+        });
+      else formData[part.name] = part.data.toString("utf8");
+    });
+    console.log(formData);
+    // Prepare Resend API payload
+    const resendPayload = {
+      from: "Evwave Music <booking@djev.org>",
+      to: formData.email,
+      subject: `New Submission: ${formData.event}`,
+      html: `
+        <h1>Event Details</h1>
+        <p>Date: ${formData.date}</p>
+        <p>Event: ${formData.event}</p>
+        <p>Locale: ${formData.locale}</p>
+        <p>Requests: ${formData.requests}</p>
+        <!-- Add other fields -->
+      `,
+      attachments
+    };
+
+    // Send to Resend API
+    const resendResponse = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.RESEND_API_KEY}`
+      },
+      body: JSON.stringify(resendPayload)
+    });
+
+    if (!resendResponse.ok) {
+      const error = await resendResponse.json();
+      throw new Error(error.message);
+    }
+
+    let msg = {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Email sent successfully" }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    res.status(msg.statusCode).set("Content-Type", "text/html").send(msg);
+  } catch (error) {
+    let msg = {
+      statusCode: 500,
+      body: JSON.stringify({ error: error.message }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+    res.status(msg.statusCode).set("Content-Type", "text/html").send(msg);
+  }
 });
 
 app.get("/*",(req,res) => {

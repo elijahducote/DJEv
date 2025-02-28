@@ -7,8 +7,35 @@ var itR8R = 0,
 isScrolling,
 isCancelled = false;
 
+function TopNav(nav) {
+  itR8R = 0;
+  const iconname = ["HOME","BOOK","NOTE","MERCH"];
+  return list(nav,reactive(["ome", "ooking","laylists","erch"]),function (v) {
+    let offset = ".75em";
+    if (!itR8R) offset = "0";
+    if (itR8R === 3) {
+      let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section"});
+      
+      a.addEventListener("touchend",() => window.open("https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs","EvWaveMerch","noreferrer,noopener"));
+      a.addEventListener("click",() => window.open("https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs","EvWaveMerch","noreferrer,noopener"));
+      //van.add(contents,htm(undefined,"br"));
+      return a;
+    }
+    let path = ["home","booking","playlists"][itR8R],
+    section = htm([htm("","img",{class:"letter-icon",src:`./cdn/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section","data-link":path, style:`user-select: none;`});
+    section.addEventListener("click", function() {
+      window.router.goto(this.dataset.link);
+    });
+    ++itR8R;
+    //van.add(wrapper[5],htm([htm("test","span"),v],"h2"));
+    //van.add(contents,htm(undefined,"br"));
+    return section;
+  });
+}
+
 function Menu(dropdown) {
-  const exit = htm("","img",{class:"exit-icon",src:"./CDN/img/svg/CRUX.svg"}),
+  itR8R = 0;
+  const exit = htm("","img",{class:"exit-icon",src:"./cdn/img/svg/CRUX.svg"}),
   iconname = ["HOME","BOOK","NOTE","MERCH"],
   contents = dropdown.firstElementChild;
   exit.addEventListener("touchend", throttle(function () {
@@ -28,7 +55,7 @@ function Menu(dropdown) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
     if (itR8R === 3) {
-      let a = htm([htm("","img",{class:"letter-icon",src:`./CDN/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{style:`margin: ${offset} 0 0;`});
+      let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{style:`margin: ${offset} 0 0;`});
       
       a.addEventListener("touchend",() => window.open("https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs","EvWaveMerch","noreferrer,noopener"));
       a.addEventListener("click",() => window.open("https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs","EvWaveMerch","noreferrer,noopener"));
@@ -36,7 +63,7 @@ function Menu(dropdown) {
       return a;
     }
     let path = ["home","booking","playlists"][itR8R],
-    section = htm([htm("","img",{class:"letter-icon",src:`./CDN/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{"data-link":path, style:`margin: ${offset} 0 0; user-select: none;`});
+    section = htm([htm("","img",{class:"letter-icon",src:`./cdn/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{"data-link":path, style:`margin: ${offset} 0 0; user-select: none;`});
     section.addEventListener("click", function() {
       const clickEvent = new Event("click");
       exit.dispatchEvent(clickEvent);
@@ -66,7 +93,7 @@ export function Header(item) {
   dendros.setAttributeNS(null,"viewBox","0 0 24 24");
   const drawer = htm(ChevronsUp({class:"icon",id:"drawer"}),"main",{class:"menu"}),
   icon = drawer.firstElementChild,
-  img = htm(htm("","img",{src:"./CDN/img/PREVIEW_LOGO.png",class:"blurry-load","data-large":"./CDN/img/logo_white.png"}),"div",{class:"header-img"}),
+  img = htm(htm("","img",{src:"./cdn/img/PREVIEW_LOGO.png",class:"blurry-load","data-large":"./cdn/img/logo_white.png"}),"div",{class:"header-img"}),
   menutab = item[5].parentElement,
   socials = [Instagram({class:"icon",id:"instagram"}),Youtube({class:"icon",id:"youtube",stroke:"url(#gradi-yt)"}),dendros],
   //Link({class:"icon",id:"linktree"})
@@ -128,18 +155,20 @@ export function Header(item) {
     }, 800), {once:true});
   }, 800), false);*/
  
-  drawer.addEventListener("touchend", throttle(() => {
-    console.log("Enteredd","\n");
-    this.addEventListener("transitionend",collapser,{once:true});
-  },2000));
+  drawer.addEventListener("touchend", () => {
+      console.log("Enteredd","\n");
+      drawer.addEventListener("transitionend",collapser,{once:true});
+  });
 
   drawer.addEventListener("transitioncancel", () => {
     isCancelled = true;
     console.log("Cancelled","\n");
   });
   drawer.addEventListener("mouseenter", () => {
-    console.log("Entered","\n");
-    this.addEventListener("transitionend",collapser,{once:true});
+    if (menutab.style.opacity !== "1") {
+      console.log("Entered","\n");
+      drawer.addEventListener("transitionend",collapser,{once:true});
+    }
   });
 
   van.add(img,drawer);
@@ -156,7 +185,11 @@ export function Header(item) {
   document.getElementById("linktree").addEventListener("touchend",interaction);
   document.getElementById("linktree").addEventListener("click",interaction);
 
-  van.add(item[4],htm("","img",{src:"./CDN/img/PREVIEW_SUNDOWN.png",class:"d-ev-music-image blurry-load","data-large":"./CDN/img/Sunset.png"}));
+  const top_nav = htm(undefined,"div",{class:"top-nav"});
+  van.add(img, top_nav);
+  TopNav(top_nav);
+
+  van.add(item[4],htm("","img",{src:"./cdn/img/PREVIEW_SUNDOWN.png",class:"d-ev-music-image blurry-load","data-large":"./cdn/img/Sunset.png"}));
   Menu(menutab);
   return img;
 }

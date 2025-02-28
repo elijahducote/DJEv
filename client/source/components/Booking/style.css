@@ -1,6 +1,5 @@
 .booking-form {
   box-sizing: border-box;
-  align-items: flex-start;
   border-radius: 0.375em;
   color: rgb(255, 255, 255);
   display: flex;
@@ -15,9 +14,8 @@
   text-decoration-color: rgb(255, 255, 255);
   text-decoration-style: solid;
   text-decoration-thickness: auto;
+  padding: 0 6vw;
   font-size: 1em;
-  height: 60vh;
-  margin: -2vh 0 0 0;
 }
 
 .booking-submit {
@@ -48,7 +46,7 @@
   border: 0.25em solid rgb(255, 255, 255);
 }
 
-.booking-email-input {
+.booking-input {
   box-sizing: border-box;
   font-size: 1em;
   line-height: 1ch;

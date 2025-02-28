@@ -12,7 +12,7 @@ export function Booking() {
   fillout = new Form(bookingForm, {
       id: "form",
       method:"POST",
-      action:"/resend",
+      action:"/go/resend",
       //className: "pure-form pure-form-stacked",
       schema: [
         {

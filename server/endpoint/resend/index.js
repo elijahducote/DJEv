@@ -6,11 +6,12 @@ exports.handler = async function (event, context) {
     // Handle binary body
     const contentType = event.headers['content-type'],
     bodyBuffer = Buffer.from(event.body, event.isBase64Encoded ? 'base64' : 'utf8'),
-    statum,
-    error = false;
-
     // Parse multipart form data
-    const { fields, files } = await parseFormData(bodyBuffer, contentType);
+    { fields, files } = await parseFormData(bodyBuffer, contentType);
+    
+    let statum,
+    error = false;
+    
     
     await axios.post("https://api.hcaptcha.com/siteverify", {secret:process.env.HCAPTCHA_SECRET,response:fields.token}).then((resp) => {
       statum = resp.data.success;

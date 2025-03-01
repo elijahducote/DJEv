@@ -18,7 +18,7 @@ exports.handler = async function (event, context) {
     }).catch((err) => {
       error = err;
     });
-    if (error) throw new Error(error);
+    if (!statum) throw new Error(error);
     // Prepare email payload
     const emailPayload = {
       from: 'Evwave Music <booking@djev.org>',

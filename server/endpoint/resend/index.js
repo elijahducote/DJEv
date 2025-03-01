@@ -1,5 +1,5 @@
-import Busboy from 'busboy';
-import axios from 'axios';
+const Busboy = require('busboy');
+const axios = require('axios');
 
 exports.handler = async function (event, context) {
   try {

@@ -7,11 +7,8 @@
   "dependencies": {
     "@forms.js/core": "^1.1.12",
     "@hcaptcha/vanilla-hcaptcha": "^1.1.0-alpha2",
-    "@hono/node-server": "^1.13.8",
     "axios": "^1.7.2",
     "busboy": "^1.6.0",
-    "dotenv": "^16.4.5",
-    "parse-multipart": "^1.0.4",
     "round-carousel-component": "^1.2.1",
     "vanjs-core": "^1.5.1",
     "vanjs-ext": "^0.6.0",
@@ -19,6 +16,8 @@
     "esbuild": "0.25.0"
   },
   "devDependencies": {
-    "hono": "^4.7.2"
+    "hono": "^4.7.2",
+    "@hono/node-server": "^1.13.8",
+    "dotenv": "^16.4.5"
   }
 }

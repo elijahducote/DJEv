@@ -19,11 +19,6 @@
   from = "/shop/*"
   to = "/shop/index.html"
   status = 200
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
   
 [[redirects]]
   from = "https://shop.djev.org/*"
@@ -43,3 +38,8 @@
       img-src 'self' data: https://*.spreadshirt.com;
       connect-src 'self' https://evwave.myspreadshop.com https://*.spreadshirt.com;
     """
+    
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

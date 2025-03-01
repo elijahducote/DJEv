@@ -12,7 +12,7 @@ exports.handler = async function (event, context) {
     // Parse multipart form data
     const { fields, files } = await parseFormData(bodyBuffer, contentType);
     
-    await hcaptcha.post("https://api.hcaptcha.com/siteverify", {secret:process.env.HCAPTCHA_SECRET,response:fields.token}).then((resp) => {
+    await axios.post("https://api.hcaptcha.com/siteverify", {secret:process.env.HCAPTCHA_SECRET,response:fields.token}).then((resp) => {
       statum = resp.data.success;
     }).catch((err) => {
       error = err;

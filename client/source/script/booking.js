@@ -82,6 +82,9 @@ export function Booking() {
           enhance: true,
           multiple: true,
           required: true,
+          options: {
+            plugins: ["remove_button","checkbox_options"]
+          },
           placeholder: "Choose as many from the selection.",
           optionsList: [
             {

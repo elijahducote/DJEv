@@ -1,8 +1,7 @@
-import { Buffer } from 'node:buffer';
 import Busboy from 'busboy';
 import axios from 'axios';
 
-exports.handler = async (event) => {
+exports.handler = async function (event, context) {
   try {
     // Handle binary body
     const contentType = event.headers['content-type'],

@@ -9,11 +9,14 @@ exports.handler = async function (event, context) {
     // Parse multipart form data
     { fields, files } = await parseFormData(bodyBuffer, contentType);
     
-    let statum,
+    let statum = false,
     error = false;
     
-    
-    await axios.post("https://api.hcaptcha.com/siteverify", {secret:process.env.HCAPTCHA_SECRET,response:fields.token}).then((resp) => {
+    const params = new URLSearchParams();
+    params.append('secret', process.env.HCAPTCHA_SECRET);
+    params.append('response', fields.token);
+
+    await axios.post("https://api.hcaptcha.com/siteverify", params).then((resp) => {
       statum = resp.data.success;
     }).catch((err) => {
       error = err;

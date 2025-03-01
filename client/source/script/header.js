@@ -16,7 +16,7 @@ function TopNav(nav) {
     if (itR8R === 3) {
       let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section"});
       
-      a.addEventListener("touchend",() => window.open("https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs","EvWaveMerch","noreferrer,noopener"));
+      a.addEventListener("touchend",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
       a.addEventListener("click",() => window.open("https://evwaveshop.com/dj+ev?collection=YwPNCCCyFs","EvWaveMerch","noreferrer,noopener"));
       //van.add(contents,htm(undefined,"br"));
       return a;

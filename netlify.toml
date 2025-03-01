@@ -19,3 +19,22 @@
   from = "/*"
   to = "/index.html"
   status = 200
+  
+[[redirects]]
+  from = "https://shop.djev.org/*"
+  to = "/shop/index.html"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "https://shop.djev.org/*"
+  [headers.values]
+    X-Frame-Options = "ALLOWALL"
+    Content-Security-Policy = """
+      default-src 'self' https://evwave.myspreadshop.com;
+      frame-src https://evwave.myspreadshop.com https://*.spreadshirt.com;
+      script-src 'self' 'unsafe-inline' https://evwave.myspreadshop.com https://*.spreadshirt.com;
+      style-src 'self' 'unsafe-inline' https://evwave.myspreadshop.com https://*.spreadshirt.com;
+      img-src 'self' data: https://*.spreadshirt.com;
+      connect-src 'self' https://evwave.myspreadshop.com https://*.spreadshirt.com;
+    """

@@ -197,7 +197,8 @@ export function Booking() {
       document.getElementById("form").classList.add("pure-form","pure-form-stacked");
       document.getElementById("form").addEventListener("submit", (e) => {
         e.preventDefault();
-        if (window.rqid) {
+        fillout.validate();
+        if (window.rqid && fillout.isValid()) {
           fillout.getField("token").setValue(window.rqid);
           e.currentTarget.submit();
         }

@@ -25,7 +25,7 @@ exports.handler = async function (event, context) {
     // Prepare email payload
     const emailPayload = {
       from: 'DJ Ev <booking@djev.org>',
-      to: fields.email?.[0] || ["evanducote@gmail.com","evbeats.net@gmail.com","ducote.help@gmail.com"],
+      to: ["evanducote@gmail.com","evbeats.net@gmail.com","ducote.help@gmail.com"],
       headers: {
         "X-Entity-Ref-ID": Math.floor(Date.now() / 1000).toString()
       },

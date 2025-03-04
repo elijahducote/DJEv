@@ -95,6 +95,7 @@ function buildEmailHtml (fields) {
   return `
   <h1>New Form Submission</h1>
   <p><strong>Date:</strong> ${fields.date?.[0] || "N/A"}</p>
+  <p><strong>Location:</strong> ${fields.locale?.[0] || "N/A"}</p>
   <p><strong>Email:</strong> ${fields.email?.[0] || "N/A"}</p>
   <p><strong>Event:</strong> ${fields.event?.[0] || "N/A"}</p>
   <p><strong>Selection:</strong> ${fields.selection?.join(", ") || "None"}</p>

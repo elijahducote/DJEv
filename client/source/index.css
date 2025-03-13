@@ -305,9 +305,9 @@ main.newmedia {
   width:0;
   height:0;
   margin-right:2em;
-  pointer-events: none;
+  /*pointer-events: none;
   user-select: none;
-  touch-action: none;
+  touch-action: none;*/
 }
 img.d-ev-music-image {
   min-height:100vh;

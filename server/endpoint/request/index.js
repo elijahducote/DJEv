@@ -32,11 +32,11 @@ exports.handler = async function (event, context) {
       subject: `New Submission: ${fields.event?.[0] || 'No Event'}`,
       html: buildEmailHtml(fields)
     };
-    if (files[files.length - 1].content.length && files.length !== 0) emailPayload.attachments = files.map(file => ({
+    /*if (files[files.length - 1].content.length && files.length !== 0) emailPayload.attachments = files.map(file => ({
         content: file.content.toString('base64'),
         filename: file.filename,
         contentType: file.contentType
-    }));
+    }));*/
 
     // Send to Resend API
     await axios.post('https://api.resend.com/emails', emailPayload, {

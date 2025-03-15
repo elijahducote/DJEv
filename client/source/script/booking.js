@@ -196,6 +196,7 @@ export function Booking() {
         ]
     });
     window.addEventListener("load", function () {
+      document.getElementById("submit-button").disabled = true;
       document.getElementById("form").setAttribute("enctype","multipart/form-data");
       document.getElementById("form").classList.add("pure-form","pure-form-stacked");
       document.getElementById("form").addEventListener("submit", (e) => {

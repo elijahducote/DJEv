@@ -7,6 +7,7 @@ import {Home} from "./home";
 //import {Events} from "./events";
 import {Booking} from "./booking";
 import {Playlists} from "./playlists";
+import {Requests} from "./requests";
 import BlurryImageLoad from "./blurry-load";
 
 const wrapper = document.getElementsByClassName("wrapper"),
@@ -85,14 +86,14 @@ function WebApp(page,args) {
 const landing = WebApp.bind(this,Home),
 //shows = WebApp.bind(this,Events),
 contact = WebApp.bind(this,Booking),
-listen = WebApp.bind(this,Playlists);
+listen = WebApp.bind(this,Playlists),
+requested = WebApp.bind(this,Requests);
 van.add(app,siteHeader);
 van.add(document.getElementById("home"), landing);
 //van.add(document.getElementById("events"), shows);
 van.add(document.getElementById("booking"), contact);
 van.add(document.getElementById("playlists"), listen);
-
-
+van.add(document.getElementById("song-requests"), requested);
 
 /*document.getElementsByClassName("booking-form")[0].addEventListener("verified", (e) => {
     window.rqid = e.token;

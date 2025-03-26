@@ -7,7 +7,7 @@ export function wrapper(func,type) {
   return async (...args) => {
     if (type === "NETLIFY") {
       let {body, headers, isBase64Encoded, queryStringParameters} = args[0];
-      body = JSON.parse(body);
+      
       switch (headers["content-type"]) {
         case "application/x-www-form-urlencoded":
           body = qs.parse(body);

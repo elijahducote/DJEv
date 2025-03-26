@@ -6,9 +6,12 @@ export function wrapper(func,type) {
   type = type.toUpperCase();
   return async (...args) => {
     if (type === "NETLIFY") {
-      let {body, headers, isBase64Encoded, queryStringParameters} = args[0];
+      let {body, headers, isBase64Encoded, queryStringParameters} = args[0],
+      mime = headers["Content-Type"];
+      mime = mime.toLowerCase();
+      if (mime.startsWith("application/json")) mime = "application/json";
       
-      switch (headers["content-type"]) {
+      switch (mime) {
         case "application/x-www-form-urlencoded":
           body = qs.parse(body);
           break;

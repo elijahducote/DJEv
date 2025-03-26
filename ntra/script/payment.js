@@ -151,12 +151,14 @@ export function Payment() {
           return;
         }
         
-        const {data: msg} = await axios.post(`${srcURL}/go/create-intent`,
-          {
+        const intent_data = {
             amount,
             confirmation_token,
             payment_method
-        },{
+        };
+        const {data: msg} = await axios.post(`${srcURL}/go/create-intent`,
+          JSON.stringify(intent_data);
+          ,{
           responseType: "json"
         });
         window.alert(msg);

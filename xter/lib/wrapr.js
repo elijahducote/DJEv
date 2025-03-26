@@ -21,11 +21,11 @@ export function wrapper(func,type) {
           break;
       }
       if (body === undefined || !body.length) body = queryStringParameters;
-      const resp = func(body);
+      const resp = await func(body);
       if (resp.type === "application/json") resp.msg = JSON.stringify(resp.msg);
       return {
         headers: {
-          "content-type": resp.type
+          "Content-Type": resp.type
         },
         statusCode: resp.code,
         body: resp.msg

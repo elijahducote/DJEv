@@ -7,7 +7,7 @@ export async function createIntent(body) {
     const log = [],
     {payment_method, amount, confirmation_token} = body;
     
-  
+    console.log(body);
     if (payment_method) report(`Got the payment method: ${payment_method}.`,log);
     else report(`Did not recieve the payment method.`,log,false);
     if (amount) report(`Got the amount: ${amount}.`,log);

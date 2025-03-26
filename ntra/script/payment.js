@@ -162,7 +162,7 @@ export function Payment() {
           headers: {
             "Content-Type": "application/json"
           },
-          responseType: "json"
+          //responseType: "json"
         });
         window.alert(msg);
         

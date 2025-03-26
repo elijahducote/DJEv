@@ -8,7 +8,6 @@ export function wrapper(func,type) {
     if (type === "NETLIFY") {
       let {body, headers, isBase64Encoded, queryStringParameters} = args[0],
       mime = headers["content-type"];
-      mime = mime.toLowerCase();
       if (mime.startsWith("application/json")) mime = "application/json";
       
       switch (mime) {

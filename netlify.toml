@@ -1,5 +1,5 @@
 [build]
-  publish = "client/source"
+  publish = "ntra"
 
 [[redirects]]
   from = "/go/*"
@@ -7,12 +7,12 @@
   status = 200
 
 [functions]
-  directory = "server/endpoint"
+  directory = "xter"
   node_bundler = "esbuild"
 
 [[redirects]]
   from = "/cdn/*"
-  to = "/:splat"
+  to = "/src/:splat"
   status = 200
 
 [[redirects]]

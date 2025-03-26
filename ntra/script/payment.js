@@ -157,7 +157,7 @@ export function Payment() {
             payment_method
         };
         const {data: msg} = await axios.post(`${srcURL}/go/create-intent`,
-          JSON.stringify(intent_data);
+          JSON.stringify(intent_data)
           ,{
           responseType: "json"
         });

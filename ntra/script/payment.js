@@ -159,6 +159,7 @@ export function Payment() {
         },{
           responseType: "json"
         });
+        window.alert(msg);
         
         /*const {error: {message: confirmError}} = await stripe.confirmPayment({
           elements: elements,

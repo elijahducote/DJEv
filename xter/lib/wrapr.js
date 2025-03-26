@@ -28,7 +28,8 @@ export function wrapper(func,type) {
           break;
       }
       //body = "aaa";
-      if (body === undefined) body = queryStringParameters;
+      if (body === undefined) body = {};
+      if (queryStringParameters) body = Object.assign(body, queryStringParameters);
       const resp = await func(body);
       if (resp.type === "application/json") resp.msg = JSON.stringify(resp.msg);
       return {

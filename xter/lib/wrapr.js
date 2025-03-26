@@ -27,8 +27,8 @@ export function wrapper(func,type) {
           body = {fields, files};
           break;
       }
-      body = "aaa";
-      if (body === undefined || !body.length) body = queryStringParameters;
+      //body = "aaa";
+      //if (body === undefined || !body.length) body = queryStringParameters;
       const resp = await func(body);
       if (resp.type === "application/json") resp.msg = JSON.stringify(resp.msg);
       return {

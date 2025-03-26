@@ -115,7 +115,7 @@ export function Payment() {
       van.add(form.childNodes[form.childNodes.length - 3],htm(undefined,"br"));
       van.add(form.childNodes[form.childNodes.length - 3],pay);
       van.add(form.childNodes[form.childNodes.length - 2],captcha);
-      van.add(form.childNodes[form.childNodes.length - 2],htm("Test","div",{id:"payment-message"}));
+      van.add(form.childNodes[form.childNodes.length - 2],htm(undefined,"div",{id:"payment-message"}));
       
       paymentElement.mount(pay);
 

@@ -5,7 +5,7 @@ const stripe = Stripe(process.env.STRIPE_SK,{apiVersion:"2025-02-24.acacia"});
 export async function createIntent(body) {
   try {
     const log = [],
-    {payment_method, amount, confirmation_token} = body;
+    {payment_method, amount, confirmation_token, idempotencyKey} = body;
     
     if (payment_method) report(`Got the payment method: ${payment_method}.`,log);
     else report(`Did not recieve the payment method.`,log,false);
@@ -18,6 +18,8 @@ export async function createIntent(body) {
       //payment_method,
       name: "Anonymous",
       email: "test@example.com"
+    },{
+      idempotencyKey
     }),
     {client_secret, status, error} = await stripe.paymentIntents.create({
       customer,
@@ -26,6 +28,8 @@ export async function createIntent(body) {
       confirm: true,
       currency: "usd",
       automatic_payment_methods: {enabled: true}
+    },{
+      idempotencyKey
     });
 
     /*if (error) report(error,log,false);

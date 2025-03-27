@@ -5,10 +5,12 @@ import axios from "axios";
 import { formatCurrency } from "./utility.js";
 import { handleServerResponse } from "./utility.js";
 const stripe = Stripe("pk_live_51PVFAM07xQtIlHl5nneheqyHshNmnrBOzRIgxXQs6GYp7cmtOWsgQnRlQYwUFez0teYb8OYUlIKi91XLMvEm4gts00iISFGmfg");
+import { v4 as uuidv4 } from "uuid";
 
 let paymentfillout,
 portnumbr = "",
-srcURL;
+srcURL,
+idempotencyKey = uuidv4();
 
 if (window.location.port.length > 1) portnumbr = `:${window.location.port}`;
 srcURL = `${window.location.protocol}//${window.location.hostname}${portnumbr}`;
@@ -144,7 +146,16 @@ export function Payment() {
           params: {
             return_url: `${srcURL}/go/message`
           }
+        },
+        {
+          idempotencyKey
         });
+        
+        /*if (confirmation_token && hasMadeTransaction) return;
+        else if (confirmation_token) {
+          hasMadeTransaction = true;
+        }*/
+        
         
         if (tokenError) {
           statusMsg.textContent = tokenError;
@@ -154,7 +165,8 @@ export function Payment() {
         const intent_data = {
             amount,
             confirmation_token,
-            payment_method
+            payment_method,
+            idempotencyKey
         };
         const {data: msg} = await axios.post(`${srcURL}/go/create-intent`,
           intent_data
@@ -164,7 +176,6 @@ export function Payment() {
           },
           //responseType: "json"
         });
-        window.alert(msg);
         
         /*const {error: {message: confirmError}} = await stripe.confirmPayment({
           elements: elements,

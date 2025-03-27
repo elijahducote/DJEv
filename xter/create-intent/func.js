@@ -1,11 +1,12 @@
 import Stripe from "stripe";
+import { v4 as uuid } from "@lukeed/uuid";
 import {checkValues,tabulateList,report} from "../lib/utility.js";
 const stripe = Stripe(process.env.STRIPE_SK,{apiVersion:"2025-02-24.acacia"});
 
 export async function createIntent(body) {
   try {
     const log = [],
-    {payment_method, amount, confirmation_token, idempotencyKey} = body;
+    {payment_method, amount, confirmation_token, idempotencyKey, idempotencyKey1} = body;
     
     if (payment_method) report(`Got the payment method: ${payment_method}.`,log);
     else report(`Did not recieve the payment method.`,log,false);
@@ -29,7 +30,7 @@ export async function createIntent(body) {
       currency: "usd",
       automatic_payment_methods: {enabled: true}
     },{
-      idempotencyKey
+      idempotencyKey: idempotencyKey1
     });
 
     /*if (error) report(error,log,false);

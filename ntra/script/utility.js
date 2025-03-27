@@ -45,7 +45,7 @@ export async function handleServerResponse (response,stripe) {
   const statumMsg = document.getElementById("payment-message");
   if (response.error) {
     // Show error from server on payment form
-    statumMsg.textContent = `Something is amiss: ${response.error}!`;
+    statumMsg.textContent = `Something is amiss: ${JSON.stringify(response.error)}!`;
   } else if (response.status === "requires_action") {
     // Use Stripe.js to handle the required next action
     const {

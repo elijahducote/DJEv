@@ -4,13 +4,16 @@ import { Form } from "@forms.js/core";
 import axios from "axios";
 import { formatCurrency } from "./utility.js";
 import { handleServerResponse } from "./utility.js";
-const stripe = Stripe("pk_live_51PVFAM07xQtIlHl5nneheqyHshNmnrBOzRIgxXQs6GYp7cmtOWsgQnRlQYwUFez0teYb8OYUlIKi91XLMvEm4gts00iISFGmfg");
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "@lukeed/uuid";
+
+const stripe = Stripe("pk_live_51PVFAM07xQtIlHl5nneheqyHshNmnrBOzRIgxXQs6GYp7cmtOWsgQnRlQYwUFez0teYb8OYUlIKi91XLMvEm4gts00iISFGmfg"),
+idempotencyKey = uuid(),
+idempotencyKey2 = uuid(),
+idempotencyKey3 = uuid();
 
 let paymentfillout,
 portnumbr = "",
-srcURL,
-idempotencyKey = uuidv4();
+srcURL;
 
 if (window.location.port.length > 1) portnumbr = `:${window.location.port}`;
 srcURL = `${window.location.protocol}//${window.location.hostname}${portnumbr}`;
@@ -128,16 +131,21 @@ export function Payment() {
         submitBtn = document.getElementById("payment-submit"),
         statusMsg = document.getElementById("payment-message");
         
+        statusMsg.textContent = "Processing payment...";
+        submitBtn.disabled = true;
+        
         let bal = money.indexOf("US$ ");
         if (!bal) ++bal;
         const formatted = money.substring(bal*4).split(",").join(""),
         amount = Math.round((parseFloat(formatted) * 100));
         
         
+        
         const {selectedPaymentMethod: payment_method, error: submitError} = await elements.submit();
         
         if (submitError) {
          statusMsg.textContent = submitError.message;
+         submitBtn.disabled = false;
          return;
         }
         
@@ -166,9 +174,10 @@ export function Payment() {
             amount,
             confirmation_token,
             payment_method,
-            idempotencyKey
+            idempotencyKey: idempotencyKey2,
+            idempotencyKey1: idempotencyKey3
         };
-        const {data: msg} = await axios.post(`${srcURL}/go/create-intent`,
+        const {data: msg, data: status} = await axios.post(`${srcURL}/go/create-intent`,
           intent_data
           ,{
           headers: {
@@ -176,6 +185,12 @@ export function Payment() {
           },
           //responseType: "json"
         });
+        
+        if (status !== "succeeded") {
+          idempotencyKey = uuid();
+          idempotencyKey2 uuid();
+          idempotencyKey3 = uuid();
+        }
         
         /*const {error: {message: confirmError}} = await stripe.confirmPayment({
           elements: elements,
@@ -185,7 +200,7 @@ export function Payment() {
             return_url: "https://example.com"
           }
         });
-        
+      
         if (confirmError) statusMsg.textContent = confirmError;*/
         handleServerResponse(msg,stripe);
       });

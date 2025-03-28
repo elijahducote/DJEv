@@ -6,14 +6,14 @@ import { formatCurrency } from "./utility.js";
 import { handleServerResponse } from "./utility.js";
 import { v4 as uuid } from "@lukeed/uuid";
 
-const stripe = Stripe("pk_live_51PVFAM07xQtIlHl5nneheqyHshNmnrBOzRIgxXQs6GYp7cmtOWsgQnRlQYwUFez0teYb8OYUlIKi91XLMvEm4gts00iISFGmfg"),
-idempotencyKey = uuid(),
-idempotencyKey2 = uuid(),
-idempotencyKey3 = uuid();
+const stripe = Stripe("pk_live_51PVFAM07xQtIlHl5nneheqyHshNmnrBOzRIgxXQs6GYp7cmtOWsgQnRlQYwUFez0teYb8OYUlIKi91XLMvEm4gts00iISFGmfg");
 
 let paymentfillout,
 portnumbr = "",
-srcURL;
+srcURL,
+idempotencyKey = uuid(),
+idempotencyKey2 = uuid(),
+idempotencyKey3 = uuid();
 
 if (window.location.port.length > 1) portnumbr = `:${window.location.port}`;
 srcURL = `${window.location.protocol}//${window.location.hostname}${portnumbr}`;
@@ -188,7 +188,7 @@ export function Payment() {
         
         if (status !== "succeeded") {
           idempotencyKey = uuid();
-          idempotencyKey2 uuid();
+          idempotencyKey2 = uuid();
           idempotencyKey3 = uuid();
         }
         

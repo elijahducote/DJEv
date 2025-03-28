@@ -24,7 +24,10 @@ const elements = stripe.elements({
   currency: "usd",
   amount: 50, // minium value, update this later
   externalPaymentMethodTypes: [
-
+   "external_line_pay",
+   "external_paysafecard",
+   "external_samsung_pay",
+   "external_sezzle"
   ],
   captureMethod: "automatic_async", // manual automatic_async
   loader: "always",
@@ -131,16 +134,15 @@ export function Payment() {
         submitBtn = document.getElementById("payment-submit"),
         statusMsg = document.getElementById("payment-message");
         
+        statusMsg.textContent = "Processing payment...";
+        submitBtn.disabled = true;
+        
         let bal = money.indexOf("US$ ");
         if (!bal) ++bal;
         const formatted = money.substring(bal*4).split(",").join(""),
         amount = Math.round((parseFloat(formatted) * 100));
         
         
-        if (!money) {
-          statusMsg.textContent = "Did not specify amount!";
-          return;
-        }
         
         const {selectedPaymentMethod: payment_method, error: submitError} = await elements.submit();
         
@@ -149,8 +151,6 @@ export function Payment() {
          submitBtn.disabled = false;
          return;
         }
-        statusMsg.textContent = "Processing payment...";
-        submitBtn.disabled = true;
         
         const {confirmationToken: {id: confirmation_token}, error: tokenError} = await stripe.createConfirmationToken({
           elements,

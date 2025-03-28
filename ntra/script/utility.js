@@ -1,6 +1,7 @@
 import van from "vanjs-core";
-
-let oldGross;
+let oldGross,
+intentSecret,
+intentInterval;
 
 export function Dbounce(func, delay) {
   let timeout;
@@ -41,8 +42,17 @@ export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+async function refreshStatus(stripe) {
+  const {paymentIntent: {status}} = await stripe.retrievePaymentIntent(intentSecret);
+  console.log(status);
+  return status;
+}
+
 export async function handleServerResponse (response,stripe) {
   const statumMsg = document.getElementById("payment-message");
+  if (intentSecret) response.status = await refreshStatus(stripe);
+  
+  console.log(response.status);
   if (response.error) {
     // Show error from server on payment form
     statumMsg.textContent = `Something is amiss: ${JSON.stringify(response.error)}!`;
@@ -50,21 +60,30 @@ export async function handleServerResponse (response,stripe) {
     // Use Stripe.js to handle the required next action
     const {
       error,
-      paymentIntent
+      paymentIntent: {client_secret, status, id}
     } = await stripe.handleNextAction({
       clientSecret: response.client_secret
     });
 
     if (error) {
       // Show error from Stripe.js in payment form
-      statumMsg.textContent = `Something is amiss: ${error}!`;
+      statumMsg.textContent = `Something is amiss: ${error.message}!`;
     } else {
-      statumMsg.textContent = `Payment successful!`;
+      intentSecret = client_secret;
+      //intentInterval = setInterval(,1000);
+
+      if (status === "requires_action") {
+        statumMsg.textContent = "Payment cancelled prematurely!";
+        return handleServerResponse(response,stripe);
+      }
+      statumMsg.textContent = `Payment successful!!`;
+      window.location.href = `/go/message?id=${id}`;
       // Actions handled, show success message
     }
-  } else {
+  } else if (response.status === "succeeded") {
     // No actions needed, show success message
     statumMsg.textContent = `Payment successful!`;
+    window.location.href = `/go/message?id=${id}`;
   }
 }
 

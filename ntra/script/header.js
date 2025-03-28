@@ -9,20 +9,21 @@ isCancelled = false;
 
 function TopNav(nav) {
   itR8R = 0;
-  const iconname = ["HOME","BOOK","NOTE","MERCH"];
-  return list(nav,reactive(["ome", "ooking","laylists","erch"]),function (v) {
+  const iconname = ["HOME","BOOK","NOTE","MERCH","SERVICE"];
+  return list(nav,reactive(["ome", "ooking","laylists","erch","ervice"]),function (v) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
+    let path = ["home","booking","playlists",undefined,"payment"][itR8R],
+    section = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section","data-link":path, style:`user-select: none;`});
     if (itR8R === 3) {
       let a = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section"});
       
       a.addEventListener("touchend",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
       a.addEventListener("click",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
       //van.add(contents,htm(undefined,"br"));
+      ++itR8R;
       return a;
     }
-    let path = ["home","booking","playlists"][itR8R],
-    section = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`})],"h2",{class:"nav-top-section","data-link":path, style:`user-select: none;`});
     section.addEventListener("click", function() {
       window.router.goto(this.dataset.link);
     });
@@ -36,7 +37,7 @@ function TopNav(nav) {
 function Menu(dropdown) {
   itR8R = 0;
   const exit = htm("","img",{class:"exit-icon",src:"./cdn/media/img/svg/CRUX.svg"}),
-  iconname = ["HOME","BOOK","NOTE","MERCH"],
+  iconname = ["HOME","BOOK","NOTE","MERCH","SERVICE"],
   contents = dropdown.firstElementChild;
   exit.addEventListener("touchend", throttle(function () {
     dropdown.addEventListener("transitionend",function(){
@@ -51,7 +52,7 @@ function Menu(dropdown) {
     dropdown.style.opacity = "0";
   },3000));
   van.add(contents,exit);
-  return list(contents,reactive(["ome", "ooking","laylists","erch"]),function (v) {
+  return list(contents,reactive(["ome", "ooking","laylists","erch","ervice"]),function (v) {
     let offset = ".75em";
     if (!itR8R) offset = "0";
     if (itR8R === 3) {
@@ -60,9 +61,10 @@ function Menu(dropdown) {
       a.addEventListener("touchend",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
       a.addEventListener("click",() => window.open("https://shop.djev.org","EvWaveMerch","noreferrer,noopener"));
       van.add(contents,htm(undefined,"br"));
+      ++itR8R;
       return a;
     }
-    let path = ["home","booking","playlists"][itR8R],
+    let path = ["home","booking","playlists",undefined,"payment"][itR8R],
     section = htm([htm("","img",{class:"letter-icon",src:`./cdn/media/img/svg/${iconname[itR8R]}.svg`}),v],"h2",{"data-link":path, style:`margin: ${offset} 0 0; user-select: none;`});
     section.addEventListener("click", function() {
       const clickEvent = new Event("click");

@@ -1,9 +1,10 @@
 import {checkValues,tabulateList,report,sendHTMLResponse} from "../lib/utility.js";
-import axios from "axios";
+import Stripe from "stripe";
+const stripe = Stripe(process.env.STRIPE_SK,{apiVersion:"2025-02-24.acacia"});
 
 export async function message(body) {
   try {
-    const {redirect_status} = body;
+    const {redirect_status,id} = body;
     /*params = new URLSearchParams(),
     log = [];
     
@@ -21,7 +22,15 @@ export async function message(body) {
     
     if (checkValues([1,3,5],false)) throw new Error(tabulateList(log));*/
 
-    if (redirect_status !== "succeeded") throw new Error("Unsuccessful.");
+
+    if (redirect_status) {
+      if  (redirect_status !== "succeeded") throw new Error(`Unsuccessful status of ${status}.`);
+    }
+
+    if (id) {
+      const {status} = await stripe.paymentIntents.retrieve(id);
+      if (status !== "succeeded") throw new Error(`Unsuccessful status of ${status}.`);
+    }
     
     return {
       msg: sendHTMLResponse(1,"Payment authorized."),

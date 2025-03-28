@@ -63,7 +63,7 @@ h2.nav-top-section img.letter-icon {
   right: 0 !important;
   margin-right: 0 !important;
   padding: 0 !important;
-  margin-left:0.9375em;
+  margin-left:0.625em; /*0.9375em */
 }
 /* Extra Small */
 @media screen and (max-height:869.9033203125px) and (min-width:404.953125px) {
@@ -107,6 +107,9 @@ transform:scale(1.5);
 }
 main.menu {
   display:none !important;
+}
+#menu {
+  font-size: 1em !important;
 }
 div.top-nav {
   display:inline !important;
